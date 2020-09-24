@@ -5,22 +5,39 @@
 	var tela = document.querySelector("canvas");
 	var pincel = tela.getContext('2d');
 	
+	var cor = ['blue', 'yellow', 'green']; //variavel contendo as cores.
+	var indice = 0; // indice à ser atualizado pela função clickDireito();
+	
 	pincel.fillStyle = 'grey'
 	pincel.fillRect(0, 0, 600, 400);
-
+	
+	// Quando o botão esquerdo do mouse é pressionado um circulo é impresso na tela.
 	function desenhaCirculo(event){
 
-		var x = event.pageX - tela.offsetLeft;
-		var y = event.pageY - tela.offsetTop;
+		var x = event.pageX - tela.offsetLeft; // Captura o valor do eixo X onde o mouse foi clicado.
+		var y = event.pageY - tela.offsetTop; // Captura o valor do eixo Y onde o mouse foi clicado.
 
-		pincel.fillStyle = 'blue';
+		pincel.fillStyle = cor[indice];
 		pincel.beginPath();
 		pincel.arc(x, y, 10, 0, 2 * 3.14);
-		pincel.fill();		
-	
+		pincel.fill();	
 	}
-
+	
 	tela.onclick = desenhaCirculo;
+	
+	// Quando botão direito é clicado o a variavel indice é atualizada e a cor é alterada.
+	function clickDireito(){
+		
+		indice++;
+		if (indice >= cor.length){
+			indice = 0;
+		}
+		return false;
+	}
+	
+	tela.oncontextmenu = clickDireito;
+
+	
 
 	
 </script>
