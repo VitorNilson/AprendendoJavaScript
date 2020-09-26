@@ -1,4 +1,5 @@
 <canvas width="600" height="400"></canvas>
+<input type="color">
 
 <script>
 
@@ -7,30 +8,41 @@
 	
 	var cor = ['blue', 'yellow', 'green']; //variavel contendo as cores.
 	var indice = 0; // indice à ser atualizado pela função clickDireito();
+	var corInput = document.querySelector("input");
+	var desenha = false;
 	
 	pincel.fillStyle = 'grey'
 	pincel.fillRect(0, 0, 600, 400);
 	
 	// Quando o botão esquerdo do mouse é pressionado um circulo é impresso na tela.
 	function desenhaCirculo(event){
-
-		var x = event.pageX - tela.offsetLeft; // Captura o valor do eixo X onde o mouse foi clicado.
-		var y = event.pageY - tela.offsetTop; // Captura o valor do eixo Y onde o mouse foi clicado.
-		var raio = 10;
 		
-		if(event.shiftKey){
-			raio = raio * 2;
-		}
+		if(desenha){
+			var x = event.pageX - tela.offsetLeft; // Captura o valor do eixo X onde o mouse foi clicado.
+			var y = event.pageY - tela.offsetTop; // Captura o valor do eixo Y onde o mouse foi clicado.
+			var raio = 10;
 
-		pincel.fillStyle = cor[indice];
-		pincel.beginPath();
-		pincel.arc(x, y, raio, 0, 2 * 3.14);
-		pincel.fill();	
+			if(event.shiftKey){
+				raio = raio * 2;
+			}
+
+			pincel.fillStyle = corInput.value;
+			pincel.beginPath();
+			pincel.arc(x, y, raio, 0, 2 * 3.14);
+			pincel.fill();	
+		}
 	}
 	
-	tela.onclick = desenhaCirculo;
+	tela.onmousemove = desenhaCirculo;
 	
-	// Quando botão direito é clicado o a variavel indice é atualizada e a cor é alterada.
+	tela.onmousedown = function(){
+		desenha = true;
+	}
+	tela.onmouseup = function(){
+		desenha = false;
+	}
+	
+	/* Quando botão direito é clicado o a variavel indice é atualizada e a cor é alterada.
 	function clickDireito(){
 		
 		indice++;
@@ -41,7 +53,7 @@
 	}
 	
 	tela.oncontextmenu = clickDireito;
-
+	*/
 	
 
 	
